@@ -1,0 +1,13 @@
+version: "3.9"
+   
+services:
+  gcp_web:
+    container_name: gcp_web
+    image: istiyaksiddiquee/gcp-report:0.3.0
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - .:/home/code

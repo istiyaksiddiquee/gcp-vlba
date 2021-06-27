@@ -1,0 +1,274 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+
+    <title>VLBA Project Report</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/blog/">
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
+    <link href="blog.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <div class="container">
+      <header class="blog-header py-3">
+        <div class="row flex-nowrap justify-content-between align-items-center">
+          <div class="col-1 pt-1">
+            <a class="text-muted" href="#" hidden>Subscribe</a>
+          </div>
+          <div class="col-6 text-center">
+            <a class="blog-header-logo text-dark" href="#">VLBA II – System Architectures</a>
+          </div>
+          <div class="col-1 d-flex justify-content-end align-items-center" hidden>
+            <a class="text-muted" href="#" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-3"><circle cx="10.5" cy="10.5" r="7.5"></circle><line x1="21" y1="21" x2="15.8" y2="15.8"></line></svg>
+            </a>
+            <a class="btn btn-sm btn-outline-secondary" href="#" hidden>Sign up</a>
+          </div>
+        </div>
+      </header>
+
+      <div class="nav-scroller py-1 mb-2">
+        <nav class="nav d-flex justify-content-between">
+          
+        </nav>
+      </div>
+
+      <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark">
+        <div class="col-md-6 px-0">
+          <h1 class="display-4 font-bold">Istiyak H. Siddiquee's Project Report</h1>
+          <p class="lead my-3">This is the publicly available web view of the project report for VLBA II: System Architectures course.</p>
+          
+        </div>
+      </div>
+
+      
+    <main role="main" class="container">
+      <div class="row">
+        <div class="col-md-8 blog-main">
+          <h3 class="pb-3 mb-4 font-italic border-bottom">
+            Event-based Forecasting (IX)
+          </h3>
+          
+          <div style="text-align: justify;" class="blog-post">
+            <h2 class="blog-post-title">Avocado and Covid</h2>
+            <p class="blog-post-meta">June 30th, 2021 by <a href="#">Istiyk Siddiquee</a></p>
+            
+            <!-- <hr> -->
+            <p>
+              The course VLBA-II System Architectures offered us a great opportunity to learn about GCP on a hands-on basis. To facilitate this experience, we were asked to work on some interesting 
+              ideas using tools provided by GCP and deploy the results of our endeavour in a publicly accessible fashion. 
+            </p>
+
+            <p>
+              The project I got assigned to deals with event-based forecasting. I was given two publicly available datasets from Kaggle: one is related to avocado prices and the other one is about covid infections.
+              The task was to predict avocado prices using time-series model and to evaluate the influence of covid infections on the price of avocado. We were also instructed to use as much GCP tool as possible 
+              to enhance our experience with it. Below is a list of GCP tools that I used to complete this project. 
+              
+              <ul>
+                <li>Cloud DataPrep</li>
+                <li>AutoML</li>
+                <li>BigQuery</li>
+                <li>Cloud Storage</li>
+                <li>Container Registry</li>
+                <li>Compute Engine</li>
+              </ul>  
+              
+              Besides, this website was build and deployed using the following technologies
+              
+              <ul>
+                <li>HTML</li>
+                <li>Bootstrap</li>
+                <li>Nginx</li>
+                <li>Docker</li>
+                <li>Git</li>
+              </ul>
+
+            </p>
+
+            <p>In the following few paragraphs, I will try to explain my idea, approach, and workflow. </p>
+            </br></br>
+            <h3>Idea</h3>
+            <p>
+              The main idea of the avocado dataset was to predict the average price, given the other attributes. Task required me to run the dataset through AutoML, because of which I did not 
+              have to manually do feature extraction, or any other preprocessing. However, the second task required the analysis of influence of information of one dataset over another, so I had to use 
+              Cloud DataPrep to prepare the dataset for union (inner join in this case). Then I loaded the combined dataset on BigQuery to calculate the pearson correlation coefficient which 
+              gives us the notion of correlation between two variables. Finally, I collated all the information, created this webpage, packaged it using nginx and docker and created a VM instance 
+              in GCP and deployed and published it using a fixed IP. 
+            </p>
+            </br></br>  
+            <h3>Workflow</h3>
+            </br>
+            <h4>Forecasting using AutoML</h4>
+            </br>
+            <p>
+              At the very beginning, I created a bucket to store all the necessary information e.g. the dataset, job runs for dataprep. I situated the bucket in european multi-zone. 
+            </p>
+            <img class="col-md-12" src="./images/1. bucket.JPG">
+            <figcaption style="text-align: center;">Fig 1: Cloud Storage Bucket</figcaption>
+            </br>
+            <p>
+              After this, I loaded this dataset to AutoML model with RMSE as optimization objective. There it ran for about 2 hours, and yielded a reasonably acceptable result where RMSE was 0.075 and MAE was 0.053.
+            </p>
+            <img class="col-md-12" src="./images/2. loading to automl.JPG">
+            <figcaption style="text-align: center;">Fig 2: Loading to AutoML</figcaption>
+            </br>
+            <img class="col-md-12" src="./images/3. preparing to run automl model.JPG">
+            <figcaption style="text-align: center;">Fig 3: Preparation for AutoML</figcaption>
+            </br>
+            <img class="col-md-12" src="./images/4. avocado model run.JPG">
+            <figcaption style="text-align: center;">Fig 4: AutoML Result</figcaption>
+            </br>
+            </br>
+
+            <p>
+              Furthermore, I observed that the feature importance graph is very much helpful in understanding which features are contributing more to the prediction of the average price. 
+            </p>
+            <img class="col-md-12" src="./images/5. derived feature importance.JPG">
+            <figcaption style="text-align: center;">Fig 5: AutoML Feature Importance</figcaption>
+            </br>
+            
+            </br>
+            <h4>Data Preparation using Cloud DataPrep</h4>
+            </br></br>
+            <p>Next, for the correlation analysis, I had to prepare the dataset. As both the dataset were based on daily counts, so it made sense to focus on the date column. So, at first 
+            I loaded the covid infection dataset to Google Cloud DataPrep tool. There I created a recipe to convert the date string into datetime format, to filter the dataset based on the 
+            country of origin and I chose only US as my country of interest, since the avocado dataset is based on US market. Following this, I grouped the dataset using the date attribute 
+            and created two columns for death count and confirmed case count. This is a cumulative count, and I kept it as it is. </p>
+            <img class="col-md-12" src="./images/6. dataprep flow for covid dataset.JPG">
+            <figcaption style="text-align: center;">Fig 6: Cloud DataPrep Pipeline for COVID Dataset</figcaption>
+            </br>
+            <img class="col-md-12" src="./images/7. dataprep output for covid.JPG">
+            <figcaption style="text-align: center;">Fig 7: Pipeline Result for COVID Dataset</figcaption>
+            </br>
+
+            </br></br>
+            <p>
+              Following this, I created another pipeline for avocado dataset, where I, once again, converted the date to datetime string and then used it to filter rows to have a dataset between 
+              22-01-2021 to 27-07-2021. I the reduced dataset with dates and created average of average price column and summation of the rest of the numerical columns. In this process, I had to drop 
+              non-numeric columns. The pipeline and the output can be seen below. 
+            </p>
+
+            <img class="col-md-12" src="./images/8. avocado aggregator.JPG">
+            <figcaption style="text-align: center;">Fig 8: Cloud DataPrep Pipeline for Avocado Dataset</figcaption>
+            </br>
+            <img class="col-md-12" src="./images/9. covid aggregator output.JPG">
+            <figcaption style="text-align: center;">Fig 9: Pipeline Result for Avocado Dataset</figcaption>
+            </br>
+
+            </br></br>
+
+            <p>
+              Now that I had two dataset in the required format, I created a third DataPrep pipeline for doing a inner join of these two datasets based on their dates. The pipeline and the result is shown below.
+            </p>
+            <img class="col-md-12" src="./images/10. union of two dataset.JPG">
+            <figcaption style="text-align: center;">Fig 10: Cloud DataPrep Pipeline for Union of Two Dataset</figcaption>
+            </br>
+            <img class="col-md-12" src="./images/11. union result.JPG">
+            <figcaption style="text-align: center;">Fig 11: Pipeline Result for Union</figcaption>
+            </br>
+
+            <h4>Correlation using BigQuery</h4>
+            </br></br>
+            
+            <p>
+              Following the preprocessing of the two datasets, I loaded the data in BigQuery and calculated the Pearson Correlation Coefficient, which calculates the linear correlation between 
+              two variables. From the scores that I got, it's fair to say that, although the correlation is positive, the coefficient is not strong. The query and the result is given below. 
+            </p>
+            <img class="col-md-12" src="./images/12. union dataset loaded into bigquery.JPG">
+            <figcaption style="text-align: center;">Fig 12: Loading Dataset to BigQuery</figcaption>
+            </br>
+            <img class="col-md-12" src="./images/13. correlation between death and confirmed with avg_price.JPG">
+            <figcaption style="text-align: center;">Fig 13: Calculated Correlation with Average Avocado Price</figcaption>
+            </br>
+
+            </br></br>
+
+            <h4>Deployment</h4>
+            </br></br>
+            <p>
+              As we were also asked to deploy the result of our findings in a publicly accessible manner (and to be creative about it), I decided to create a simple HTML page with css from bootstrap, 
+              wrap it with nginx and put it on a docker container so that I can deploy it anywhere I want. So, I built an image out of this dockerfile, pushed it on Docker hub and pulled it on GCP 
+              to put it on Google Container Registry.
+            </p>
+            <img class="col-md-12" src="./images/14. docker file.JPG">
+            <figcaption style="text-align: center;">Fig 14: Code for the Dockerfile</figcaption>
+            </br>
+            <img class="col-md-12" src="./images/14. docker image for webpage in container registry.JPG">
+            <figcaption style="text-align: center;">Fig 15: Docker Image in Google Container Registry</figcaption>
+            </br>
+
+            <p>
+              After putting the image in container registry, I created a VM instance, with a static IP and installed docker on it. Then I created my desired container inside it and published the 
+              port to VM's port 80. Thus, the website is visible using the IP <a href="http://35.209.99.100/" >http://35.209.99.100/.</a>
+            </p>
+            <img class="col-md-12" src="./images/15. vm instance for report.JPG">
+            <figcaption style="text-align: center;">Fig 16: VM Instance for Reporting</figcaption>
+            </br>
+            <img class="col-md-12" src="./images/16. report deployed.JPG">
+            <figcaption style="text-align: center;">Fig 17: View of the Report</figcaption>
+            </br>
+          </div>
+          </br></br>
+          <h2>Thank you!</h2>
+          </br></br></br></br>
+        </div><!-- /.blog-main -->
+
+        <aside class="col-md-4 blog-sidebar">
+          <div class="p-3 mb-3 bg-light rounded">
+            <h4 class="font-italic">About Me</h4>
+            <p class="mb-0">Mohammad Istiyak Hossain Siddiquee</br>Sudent of MSc. in DKE</br>Matr. No. 229542</br><a href="http://istiyaksiddiquee.xyz/">Visit for more info</a></p>
+          </div>
+
+          <div class="p-3">
+            <h4 class="font-italic">Elsewhere</h4>
+            <ol class="list-unstyled">
+              <li><a href="https://github.com/istiyaksiddiquee">GitHub</a></li>
+              <li><a href="https://www.linkedin.com/in/istiyaksiddiquee/">LinkedIn</a></li>
+              <li><a href="https://www.researchgate.net/profile/Istiyak-Siddiquee">ResearchGate</a></li>
+            </ol>
+          </div>
+        </aside><!-- /.blog-sidebar -->
+
+      </div><!-- /.row -->
+
+    </main><!-- /.container -->
+
+    <footer class="blog-footer">
+      <p>
+        © <a href="http://istiyaksiddiquee.xyz/">Istiyak H. Siddiquee</a>, 2021.
+      </p>
+      <p>
+        <a href="#">Back to top</a>
+      </p>
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <script src="../../assets/js/vendor/holder.min.js"></script>
+    <script>
+      Holder.addTheme('thumb', {
+        bg: '#55595c',
+        fg: '#eceeef',
+        text: 'Thumbnail'
+      });
+    </script>
+  </body>
+</html>
